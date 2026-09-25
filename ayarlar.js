@@ -56,6 +56,8 @@ window.IKRAM = {
     ]},
 
     { bolum: "Soğuk İçecekler", urunler: [
+      { ad: "Su",           aciklama: "Soğuk ya da ılık",         ikon: "su",
+        secenekler: { "Sıcaklık": ["Soğuk", "Ilık"] } },
       { ad: "Sade Soda",    aciklama: "Maden suyu, soğuk",        ikon: "sise" },
       { ad: "Meyveli Soda", aciklama: "Meyve aromalı maden suyu", ikon: "sise" },
       { ad: "Kola",         aciklama: "Soğuk servis",             ikon: "kutu" },
