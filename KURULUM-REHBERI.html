@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İkram Menüsü Kurulum Rehberi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#ECF0F1;--paper:#fff;--ink:#13212A;--muted:#5A6B74;--line:#D5DDE0;--brand:#1F4B52;--accent:#B4531A;--soft:#F5E3D5;--warn:#F6EBCF;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#173840;--accent:#E3873F;--soft:#3A2617;--warn:#352A12;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#173840;--accent:#E3873F;--soft:#3A2617;--warn:#352A12;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+header{background:var(--brand);color:#F2F7F7;padding:32px 16px 26px}
+header div,main{max-width:760px;margin:0 auto}
+header small{font-family:var(--display);letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-weight:600}
+h1{font-family:var(--display);text-transform:uppercase;font-size:42px;line-height:1;margin:6px 0 10px}
+header p{margin:0;opacity:.88;max-width:60ch}
+main{padding:8px 16px 60px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px}
+h2{font-family:var(--display);text-transform:uppercase;font-size:26px;margin:0 0 4px;display:flex;gap:12px;align-items:baseline}
+h2 .n{color:var(--accent)}
+.time{color:var(--muted);font-size:14px;margin:0 0 12px}
+ol,ul{padding-left:22px;margin:8px 0}
+li{margin:6px 0}
+code{font-family:var(--mono);font-size:.88em;background:var(--soft);padding:2px 6px;border-radius:5px;word-break:break-all}
+.tip{background:var(--warn);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:15px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.flow div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.flow b{display:block;font-family:var(--display);text-transform:uppercase;font-size:17px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+td,th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+</style>
+</head>
+<body>
+<header><div>
+  <small>MCN Grup Otomotiv</small>
+  <h1>İkram Menüsü Kurulum Rehberi</h1>
+  <p>Toplam kurulum yaklaşık 20 dakika sürer ve ücretsizdir. Bir kez kurduktan sonra menüyü telefondan bile güncelleyebilirsiniz.</p>
+</div></header>
+<main>
+
+<section>
+  <h2>Sistem nasıl çalışıyor?</h2>
+  <div class="flow">
+    <div><b>1. QR kart</b>Odadaki kartı misafir telefonuyla okutur.</div>
+    <div><b>2. Menü</b>İçeceğini seçer, “Siparişi gönder”e basar.</div>
+    <div><b>3. Bildirim</b>Çaycının telefonu zil çalar, sipariş ekranda görünür.</div>
+    <div><b>4. Teslim</b>“Hazırlıyorum” → “Teslim ettim” ile takip edilir.</div>
+  </div>
+  <p class="tip">Klasördeki dosyalar: <code>index.html</code> (menü + sipariş ekranı), <code>ayarlar.js</code> (menü içeriği, tek düzenlenecek dosya), <code>qr-kartlari.html</code> (basılacak kartlar), bu rehber.</p>
+</section>
+
+<section>
+  <h2><span class="n">1</span> Menüyü internete koyun</h2>
+  <p class="time">10 dakika · GitHub Pages (ücretsiz)</p>
+  <ol>
+    <li><b>github.com</b> adresinde ücretsiz hesap açın (firma e-postasıyla).</li>
+    <li>Sağ üstteki <b>+</b> → <b>New repository</b>. Ad: <code>mcn-ikram</code>, <b>Public</b> seçili kalsın → <b>Create repository</b>.</li>
+    <li>Açılan sayfada <b>uploading an existing file</b> bağlantısına tıklayın. Klasördeki <code>index.html</code>, <code>ayarlar.js</code>, <code>qr-kartlari.html</code> dosyalarını (varsa <code>logo.png</code>) sürükleyip bırakın → <b>Commit changes</b>.</li>
+    <li><b>Settings</b> → soldan <b>Pages</b> → “Branch” kısmında <b>main</b> ve <b>/(root)</b> seçip <b>Save</b>.</li>
+    <li>1–2 dakika sonra aynı sayfanın üstünde adresiniz görünür: <code>https://KULLANICIADI.github.io/mcn-ikram/</code></li>
+  </ol>
+  <p class="tip">Bu adresi telefonda açıp menünün geldiğini kontrol edin. Sipariş ekranı aynı adresin sonuna <code>?ekran=siparis</code> eklenerek açılır.</p>
+</section>
+
+<section>
+  <h2><span class="n">2</span> Çaycının telefonunu hazırlayın</h2>
+  <p class="time">5 dakika · ntfy uygulaması (ücretsiz)</p>
+  <ol>
+    <li>Play Store veya App Store'dan <b>ntfy</b> uygulamasını kurun.</li>
+    <li>Uygulamada <b>+</b> düğmesine basın, konu adı olarak şunu yazın: <code>mcn-ikram-r7x4k9pq2w</code> → <b>Abone ol</b>.</li>
+    <li>Android'de: konunun ayarlarından <b>Anında teslim</b> (instant delivery) açık olsun; telefonun ayarlarından ntfy için <b>pil optimizasyonunu kapatın</b>. Böylece ekran kapalıyken de zil çalar.</li>
+    <li>Bildirime dokununca sipariş ekranı açılır. Ekranda <b>Sesi aç</b>'a bir kez basın ve sayfayı ana ekrana ekleyin (tarayıcı menüsü → “Ana ekrana ekle”).</li>
+  </ol>
+  <p class="tip">Birden fazla kişi (çaycı, sekreter) aynı konuya abone olabilir. Biri “Teslim ettim” dediğinde diğer ekranlarda da güncellenir.</p>
+</section>
+
+<section>
+  <h2><span class="n">3</span> QR kartlarını basın</h2>
+  <p class="time">5 dakika</p>
+  <ol>
+    <li>Tarayıcıda <code>https://KULLANICIADI.github.io/mcn-ikram/qr-kartlari.html</code> adresini açın. Adres kendiliğinden dolar.</li>
+    <li><b>Yazdır / PDF kaydet</b>'e basın. A4 kağıda 4 kart çıkar. Yazdırma ayarlarında “Arka plan grafikleri” açık olsun.</li>
+    <li>Kesik çizgilerden kesin; A6 masa standına veya pleksi kart tutucuya yerleştirin.</li>
+    <li>Son kart <b>Sipariş Ekranı</b> kartıdır; çay ocağına asın, yeni telefonlar bununla kurulur.</li>
+  </ol>
+  <p class="tip">Basmadan önce her odanın kartını bir telefonla okutup deneme siparişi verin.</p>
+</section>
+
+<section>
+  <h2><span class="n">4</span> Menüyü güncelleme</h2>
+  <p class="time">1 dakika · bilgisayardan veya telefondan</p>
+  <ol>
+    <li>GitHub'da <code>mcn-ikram</code> deposunu açın → <code>ayarlar.js</code> → sağ üstteki <b>kalem</b> simgesi.</li>
+    <li>Değişikliği yapın → <b>Commit changes</b>. Yaklaşık 1 dakika içinde menü güncellenir.</li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>Ne yapmak istiyorsunuz?</th><th>ayarlar.js içinde</th></tr>
+    <tr><td>Ürün bitti, bugünlük kapat</td><td>Ürün satırına <code>tukendi: true,</code> ekleyin</td></tr>
+    <tr><td>Ürünü tamamen kaldır</td><td><code>gizle: true,</code> ekleyin (ya da satırı silin)</td></tr>
+    <tr><td>Yeni ürün ekle</td><td>Benzer bir satırı kopyalayıp adını değiştirin</td></tr>
+    <tr><td>Yeni oda ekle</td><td>“yerler” listesine ekleyin, QR kartlarını yeniden basın</td></tr>
+    <tr><td>Logo ekle</td><td><code>logo.png</code> yükleyin, <code>logo: "logo.png",</code> yazın</td></tr>
+  </table></div>
+  <p class="tip">Sayfa açılmaz ve “Menü ayarları okunamadı” yazarsa son değişiklikte bir tırnak ya da virgül eksik kalmıştır. GitHub'da <b>History</b>'den önceki sürüme dönebilirsiniz.</p>
+</section>
+
+<section>
+  <h2>Bilmeniz gerekenler</h2>
+  <ul>
+    <li>Siparişler ntfy.sh üzerinden 12 saat saklanır; sipariş ekranı son 12 saati gösterir. Ücretsiz kullanım günde yüzlerce siparişe yeter.</li>
+    <li>Konu adını bilen herkes sipariş gönderebilir ve görebilir. Adı tahmin edilemez tuttuk; kişisel bilgi yazılmadığı sürece risk düşüktür. Değiştirmek isterseniz <code>ayarlar.js</code>'teki <code>bildirimKanali</code>'nı ve ntfy aboneliğini birlikte değiştirin.</li>
+    <li>Menü misafirin telefonunun açık/koyu temasına uyar.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

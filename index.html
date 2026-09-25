@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4B52">
+<meta name="robots" content="noindex">
+<title>MCN İkram Menüsü</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231F4B52'/%3E%3Cpath d='M11 6h10c0 4-2.6 6.2-2.6 9.6S21 21 21 24c0 1.8-2.2 3-5 3s-5-1.2-5-3c0-3 2.6-5 2.6-8.4S11 10 11 6z' fill='none' stroke='%23F2C49B' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#ECF0F1; --surface:#FFFFFF; --surface-2:#F4F7F8; --ink:#13212A; --muted:#5A6B74; --line:#D5DDE0;
+  --accent:#B4531A; --accent-ink:#FFFFFF; --accent-soft:#F5E3D5; --brand:#1F4B52; --brand-ink:#F2F7F7; --icon:#1F4B52;
+  --ok:#2C7A4B; --ok-soft:#DDEFE3; --warn:#9A6A10; --warn-soft:#F6EBCF; --bad:#B3261E; --shadow:0 10px 30px rgba(19,33,42,.16);
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0D151A; --surface:#152128; --surface-2:#1B2A32; --ink:#E5ECEE; --muted:#93A5AD; --line:#283840;
+  --accent:#E3873F; --accent-ink:#1B0F06; --accent-soft:#3A2617; --brand:#173840; --brand-ink:#E5F0F0; --icon:#E3873F;
+  --ok:#6CC08C; --ok-soft:#173226; --warn:#E0B458; --warn-soft:#352A12; --bad:#F2867E; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0D151A; --surface:#152128; --surface-2:#1B2A32; --ink:#E5ECEE; --muted:#93A5AD; --line:#283840;
+  --accent:#E3873F; --accent-ink:#1B0F06; --accent-soft:#3A2617; --brand:#173840; --brand-ink:#E5F0F0; --icon:#E3873F;
+  --ok:#6CC08C; --ok-soft:#173226; --warn:#E0B458; --warn-soft:#352A12; --bad:#F2867E; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark;}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-tap-highlight-color:transparent;
+  padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px}
+
+/* ---------- Başlık ---------- */
+.hero{background:var(--brand);color:var(--brand-ink);padding-block:26px 22px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;border:28px solid rgba(255,255,255,.05)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:repeating-linear-gradient(90deg,var(--accent) 0 28px,transparent 28px 36px);opacity:.9}
+.hero .wrap{position:relative}
+.logo{max-height:40px;max-width:180px;display:block;margin-bottom:12px}
+.eyebrow{font-family:var(--display);font-weight:600;letter-spacing:.18em;font-size:13px;text-transform:uppercase;opacity:.8}
+.hero h1{font-family:var(--display);font-weight:700;font-size:46px;line-height:.98;margin:6px 0 8px;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.hero p{margin:0;opacity:.85;max-width:34ch}
+.place-chip{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:inherit;border-radius:999px;padding:7px 14px 7px 10px;font-weight:600;font-size:15px}
+.place-chip svg{width:18px;height:18px}
+.place-chip small{font-weight:500;opacity:.7;margin-left:2px}
+
+/* ---------- Kategori çubuğu ---------- */
+.cats{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.cats .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.cats .wrap::-webkit-scrollbar{display:none}
+.cat{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px;color:var(--muted)}
+.cat.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* ---------- Menü ---------- */
+main{padding-block:6px 140px}
+section.group{padding-top:22px;scroll-margin-top:64px}
+.group h2{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.group h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.item{display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:center;padding:14px;border:0;background:none;width:100%;text-align:left}
+.item + .item{border-top:1px solid var(--line)}
+.item:hover{background:var(--surface-2)}
+.item:disabled{cursor:default;background:none}
+.item:disabled .ico,.item:disabled .name{opacity:.45}
+.ico{width:46px;height:46px;border-radius:12px;background:var(--surface-2);display:grid;place-items:center;color:var(--icon)}
+.ico svg{width:28px;height:28px}
+.name{font-weight:600;font-size:17px;line-height:1.2}
+.desc{color:var(--muted);font-size:14px;margin-top:2px}
+.soldout{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+.add{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;position:relative}
+.add svg{width:20px;height:20px}
+.add .n{position:absolute;top:-8px;right:-8px;min-width:22px;height:22px;border-radius:11px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+.item.in .add{background:var(--accent);color:var(--accent-ink)}
+.foot{color:var(--muted);font-size:13px;text-align:center;padding-top:28px}
+
+/* ---------- Alt sepet çubuğu ---------- */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.bar button{max-width:528px;margin:0 auto;display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;border:0;border-radius:14px;
+  background:var(--accent);color:var(--accent-ink);padding:16px 18px;font-weight:600;font-size:17px;box-shadow:var(--shadow)}
+.bar .cnt{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+
+/* ---------- Alt sayfa ---------- */
+.scrim{position:fixed;inset:0;background:rgba(8,14,18,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;
+  padding:10px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(24px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
+.sheet h3{font-family:var(--display);font-weight:700;font-size:30px;text-transform:uppercase;margin:0;line-height:1.05}
+.sheet .sub{color:var(--muted);margin:4px 0 18px}
+.lbl,label.f{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+label.f{margin:14px 0 6px}
+.opt{margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 14px;font-weight:500}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.step{display:flex;align-items:center;gap:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px}
+.step button{width:38px;height:38px;border:0;background:none;border-radius:9px;font-size:22px;line-height:1}
+.step button:hover{background:var(--line)}
+.step span{min-width:26px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.primary{width:100%;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);padding:16px;font-weight:600;font-size:17px;margin-top:18px}
+.primary:disabled{opacity:.55;cursor:default}
+.ghost{width:100%;border:0;background:none;color:var(--muted);padding:12px;font-weight:500}
+.lines{border-top:1px solid var(--line);margin-bottom:6px}
+.line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.line .t{font-weight:600}
+.line .o{color:var(--muted);font-size:14px}
+.in{width:100%;border:1.5px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;font-size:16px}
+textarea.in{resize:vertical;min-height:64px}
+.err{color:var(--bad);font-size:14px;margin-top:10px;font-weight:500}
+.done{text-align:center;padding:18px 0 4px}
+.done .ok{width:72px;height:72px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px}
+.done .ok svg{width:36px;height:36px}
+.done p{color:var(--muted);margin:6px auto 0;max-width:32ch}
+.note-demo{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:10px;padding:8px 12px;margin-top:14px}
+
+/* ================= SİPARİŞ EKRANI ================= */
+.ops{min-height:100vh;padding-bottom:40px}
+.opsbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--brand);color:var(--brand-ink)}
+.opsbar .wrap{max-width:960px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px;flex-wrap:wrap}
+.opsbar h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:26px;margin:0;line-height:1}
+.opsbar .e{font-family:var(--display);letter-spacing:.16em;font-size:12px;opacity:.75;text-transform:uppercase}
+.conn{display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.9}
+.dot{width:9px;height:9px;border-radius:50%;background:#999}
+.dot.live{background:#57D08A;box-shadow:0 0 0 4px rgba(87,208,138,.2)}
+.dot.wait{background:#E0B458}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill-btn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:inherit;border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}
+.pill-btn.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.soundwarn{background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:12px 14px;margin-top:14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.soundwarn button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:9px 14px;font-weight:600}
+.tabs{display:flex;gap:8px;padding-block:14px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;font-weight:600;color:var(--muted)}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab b{font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;border-top:5px solid var(--accent)}
+.card.prep{border-top-color:var(--warn)}
+.card.served{border-top-color:var(--ok);opacity:.8}
+.card.fresh{animation:pulse 1.2s ease-out 3}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,135,63,.55)}100%{box-shadow:0 0 0 16px rgba(227,135,63,0)}}
+@media (prefers-reduced-motion:reduce){.card.fresh{animation:none}}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card .where{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.05;text-transform:uppercase}
+.card .who{color:var(--muted);font-size:14px}
+.card .time{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap;text-align:right}
+.card .ago{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.card ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.card li{font-size:17px}
+.card li b{font-family:var(--display);font-size:20px;margin-right:4px;font-variant-numeric:tabular-nums}
+.card .memo{background:var(--warn-soft);border-radius:8px;padding:8px 10px;font-size:14px}
+.card .acts{display:flex;gap:8px;margin-top:auto}
+.card .acts button{flex:1;white-space:nowrap;border-radius:10px;padding:11px;font-weight:600;border:1.5px solid var(--line);background:var(--surface-2)}
+.card .acts .go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.card .acts .fin{background:var(--ok);border-color:var(--ok);color:#fff}
+.state{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:3px 8px;align-self:flex-start}
+.state.new{background:var(--accent-soft);color:var(--accent)}
+.state.prep{background:var(--warn-soft);color:var(--warn)}
+.state.served{background:var(--ok-soft);color:var(--ok)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 16px;border:1.5px dashed var(--line);border-radius:14px}
+.empty strong{display:block;font-family:var(--display);font-size:24px;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+.fatal{max-width:480px;margin:60px auto;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+</style>
+</head>
+<body>
+
+<!-- ========================== MENÜ (MİSAFİR) ========================== -->
+<div id="menuView">
+  <header class="hero">
+    <div class="wrap">
+      <img class="logo" id="logo" alt="" hidden>
+      <div class="eyebrow" id="firma"></div>
+      <h1 id="baslik"></h1>
+      <p id="karsilama"></p>
+      <button class="place-chip" id="placeChip" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <span id="placeLabel">Nerede oturuyorsunuz?</span>
+      </button>
+    </div>
+  </header>
+  <nav class="cats" aria-label="Kategoriler"><div class="wrap" id="cats"></div></nav>
+  <main class="wrap" id="menu"></main>
+  <div class="bar" id="bar" hidden>
+    <button type="button" id="openCart"><span>Siparişi gözden geçir</span><span class="cnt" id="barCount">0</span></button>
+  </div>
+</div>
+
+<!-- ========================== SİPARİŞ EKRANI (PERSONEL) ========================== -->
+<div id="opsView" class="ops" hidden>
+  <div class="opsbar">
+    <div class="wrap">
+      <div><div class="e" id="opsFirma"></div><h1>Sipariş Ekranı</h1></div>
+      <div class="tools">
+        <span class="conn"><span class="dot wait" id="dot"></span><span id="connTxt">Bağlanıyor</span></span>
+        <button class="pill-btn" id="soundBtn" type="button">Sesi aç</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap" style="max-width:960px">
+    <div class="soundwarn" id="soundWarn"><span>Yeni siparişte zil çalması için sesi bir kez açın.</span><button type="button" id="soundBtn2">Sesi aç</button></div>
+    <div class="tabs">
+      <button class="tab on" data-tab="open" type="button">Bekleyen <b id="nOpen">0</b></button>
+      <button class="tab" data-tab="served" type="button">Teslim edilen <b id="nServed">0</b></button>
+    </div>
+    <div class="grid" id="orders"></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+
+<script src="ayarlar.js"></script>
+<script>
+(function(){
+const C = window.IKRAM;
+if(!C){ document.body.innerHTML = '<div class="fatal"><strong>Menü ayarları okunamadı.</strong><p>ayarlar.js dosyası bu sayfayla aynı klasörde olmalı. Son yaptığınız değişiklikte bir virgül ya da tırnak eksik kalmış olabilir.</p></div>'; return; }
+
+/* ---------- İkonlar ---------- */
+const S = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+const ICON = {
+  cay:     `<svg viewBox="0 0 32 32" ${S}><path d="M11 5h10c0 4-2.6 6.2-2.6 9.6S21 20 21 23.5c0 1.8-2.2 3.2-5 3.2s-5-1.4-5-3.2c0-3.5 2.6-5.5 2.6-8.9S11 9 11 5z"/><path d="M12.6 17.5h6.8" opacity=".6"/><path d="M6 29h20"/></svg>`,
+  kahve:   `<svg viewBox="0 0 32 32" ${S}><path d="M6 13h16v5a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7z"/><path d="M22 15h2a3 3 0 0 1 0 6h-2"/><path d="M4 28.5h22"/><path d="M11.5 4.5c-1 1.5 1 2.5 0 4.5M16.5 4.5c-1 1.5 1 2.5 0 4.5"/></svg>`,
+  fincan:  `<svg viewBox="0 0 32 32" ${S}><path d="M9 15h12v3a6 6 0 0 1-6 6 6 6 0 0 1-6-6z"/><path d="M21 16.5h1.5a2.5 2.5 0 0 1 0 5H21"/><path d="M6 28h19"/><path d="M14 7c-1 1.4 1 2.4 0 4.2"/></svg>`,
+  bitki:   `<svg viewBox="0 0 32 32" ${S}><path d="M7 25C7 13.5 14.5 6 26 6c0 11.5-7.5 19-19 19z"/><path d="M7 25 18.5 13.5"/></svg>`,
+  sise:    `<svg viewBox="0 0 32 32" ${S}><path d="M13.5 3h5v4.5l2.5 4V27a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2V11.5l2.5-4z"/><path d="M11 16h10M11 22h10"/></svg>`,
+  kutu:    `<svg viewBox="0 0 32 32" ${S}><rect x="9.5" y="4.5" width="13" height="23" rx="3"/><path d="M9.5 9h13M9.5 23h13"/><path d="M14 6.8h4"/></svg>`,
+  su:      `<svg viewBox="0 0 32 32" ${S}><path d="M9 6h14l-2 21a2 2 0 0 1-2 1.8h-6A2 2 0 0 1 11 27z"/><path d="M10.2 14c2.5 1.2 5.3-1.2 11.6 0"/></svg>`,
+  meyve:   `<svg viewBox="0 0 32 32" ${S}><circle cx="12" cy="16" r="4.5"/><circle cx="20" cy="15.5" r="3.8"/><path d="M12 11.5c0-2 1-3.5 2.5-4"/><path d="M4 21h24a12 6 0 0 1-24 0z"/></svg>`,
+  kurabiye:`<svg viewBox="0 0 32 32" ${S}><circle cx="16" cy="16" r="10"/><circle cx="12.5" cy="13" r="1.2"/><circle cx="19" cy="12" r="1.2"/><circle cx="18" cy="19" r="1.2"/><circle cx="12" cy="19.5" r="1.2"/></svg>`,
+  plus:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+  check:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`
+};
+
+/* ---------- Menü verisi ---------- */
+const MENU = (C.menu||[]).map((b,i)=>({id:"b"+i, title:b.bolum,
+  items:(b.urunler||[]).filter(u=>!u.gizle).map((u,j)=>({id:`b${i}u${j}`, name:u.ad, desc:u.aciklama||"", icon:ICON[u.ikon]?u.ikon:"fincan",
+    out:!!u.tukendi, opts:Object.entries(u.secenekler||{}).filter(([k,v])=>Array.isArray(v)&&v.length).map(([k,v])=>({k,v}))}))
+})).filter(b=>b.items.length);
+const ITEMS = Object.fromEntries(MENU.flatMap(g=>g.items).map(i=>[i.id,i]));
+
+/* ---------- Yardımcılar ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const params = (()=>{ try{ return new URLSearchParams(location.search); }catch(e){ return new Map(); } })();
+const SERVER = (C.bildirimSunucusu||"https://ntfy.sh").replace(/\/$/,"");
+const TOPIC = C.bildirimKanali, TOPIC_ST = TOPIC + "-durum";
+const pageBase = location.origin + location.pathname;
+let bus = null; try{ bus = new BroadcastChannel("mcn-ikram"); }catch(e){}
+
+/* ---------- Durum ---------- */
+let cart = [];
+let place = params.get("yer") || "";
+let guestName = store.get("mcn-ikram-ad", "");
+
+/* =====================================================================
+   MENÜ
+   ===================================================================== */
+function renderMenu(){
+  $("#firma").textContent = C.firma || ""; $("#baslik").textContent = C.baslik || "İkram Menüsü";
+  $("#karsilama").textContent = C.karsilama || "";
+  if(C.logo){ const l=$("#logo"); l.src=C.logo; l.alt=C.firma||""; l.hidden=false; l.onerror=()=>l.hidden=true; }
+  $("#cats").innerHTML = MENU.map((g,i)=>`<button class="cat${i?"":" on"}" data-go="${g.id}" type="button">${esc(g.title)}</button>`).join("");
+  $("#menu").innerHTML = MENU.map(g=>`
+    <section class="group" id="g-${g.id}">
+      <h2>${esc(g.title)}</h2>
+      <div class="list">${g.items.map(it=>`
+        <button class="item" data-id="${it.id}" type="button" ${it.out?"disabled":""} aria-label="${esc(it.name)}${it.out?" (şu an yok)":" ekle"}">
+          <span class="ico">${ICON[it.icon]}</span>
+          <span><div class="name">${esc(it.name)}</div><div class="desc">${esc(it.desc)}</div></span>
+          ${it.out?`<span class="soldout">Şu an yok</span>`:`<span class="add">${ICON.plus}<span class="n" hidden></span></span>`}
+        </button>`).join("")}
+      </div>
+    </section>`).join("") + `<div class="foot">${esc(C.altYazi||"")}</div>`;
+  updatePlaceChip(); updateCounts();
+}
+function updatePlaceChip(){ $("#placeLabel").innerHTML = place ? esc(place) + ` <small>değiştir</small>` : "Nerede oturuyorsunuz?"; }
+function updateCounts(){
+  const per = {}; let total = 0;
+  cart.forEach(l=>{ per[l.id]=(per[l.id]||0)+l.qty; total+=l.qty; });
+  document.querySelectorAll(".item").forEach(el=>{
+    const n = per[el.dataset.id]||0, b = el.querySelector(".n"); if(!b) return;
+    el.classList.toggle("in", n>0); b.hidden = !n; b.textContent = n;
+  });
+  $("#bar").hidden = total===0; $("#barCount").textContent = total + " ürün";
+}
+function addToCart(id, opts, qty){
+  const key = id + "|" + JSON.stringify(opts), ex = cart.find(l=>l.key===key);
+  if(ex) ex.qty += qty; else cart.push({key,id,opts,qty});
+  updateCounts();
+}
+const optText = o => Object.values(o).join(", ");
+
+/* ---------- Alt sayfa ---------- */
+let lastFocus = null;
+function openSheet(html){ if($("#scrim").hidden) lastFocus = document.activeElement;
+  $("#sheet").innerHTML = `<div class="grab"></div>` + html; $("#scrim").hidden = false; document.body.style.overflow="hidden";
+  const f = $("#sheet").querySelector("button,select,input"); f && f.focus({preventScroll:true}); }
+function closeSheet(){ if($("#scrim").hidden) return; $("#scrim").hidden = true; document.body.style.overflow=""; lastFocus && lastFocus.focus && lastFocus.focus({preventScroll:true}); }
+$("#scrim").addEventListener("click", e=>{ if(e.target.id==="scrim") closeSheet(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeSheet(); });
+
+function itemSheet(id){
+  const it = ITEMS[id], sel = {}; let qty = 1;
+  it.opts.forEach(o=> sel[o.k]=o.v[0]);
+  openSheet(`
+    <h3>${esc(it.name)}</h3><p class="sub">${esc(it.desc)}</p>
+    ${it.opts.map(o=>`<div class="opt"><div class="lbl">${esc(o.k)}</div><div class="chips">
+      ${o.v.map(v=>`<button class="chip" type="button" data-k="${esc(o.k)}" data-v="${esc(v)}" aria-pressed="${sel[o.k]===v}">${esc(v)}</button>`).join("")}
+    </div></div>`).join("")}
+    <div class="row"><div class="lbl" style="margin:0">Adet</div>
+      <div class="step"><button type="button" data-q="-1" aria-label="Azalt">−</button><span id="q">1</span><button type="button" data-q="1" aria-label="Arttır">+</button></div></div>
+    <button class="primary" id="addBtn" type="button">Siparişe ekle</button>
+    <button class="ghost" type="button" id="cancel">Vazgeç</button>`);
+  $("#sheet").onclick = e=>{
+    const c = e.target.closest(".chip");
+    if(c){ sel[c.dataset.k]=c.dataset.v; c.parentNode.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed", x===c)); return; }
+    const q = e.target.closest("[data-q]");
+    if(q){ qty = Math.max(1, Math.min(20, qty + +q.dataset.q)); $("#q").textContent = qty; return; }
+    if(e.target.id==="addBtn"){ addToCart(id, {...sel}, qty); closeSheet(); return; }
+    if(e.target.id==="cancel") closeSheet();
+  };
+}
+function placeOptions(){
+  const list = [...(C.yerler||[])]; if(place && !list.includes(place)) list.unshift(place);
+  return `<option value="">Seçin…</option>` + list.map(p=>`<option ${p===place?"selected":""}>${esc(p)}</option>`).join("");
+}
+function placeSheet(){
+  openSheet(`<h3>Neredesiniz?</h3><p class="sub">Siparişinizi getireceğimiz yeri seçin.</p>
+    <select class="in" id="plSel" aria-label="Yer">${placeOptions()}</select>
+    <button class="primary" type="button" id="plOk">Tamam</button>`);
+  $("#sheet").onclick = e=>{ if(e.target.id==="plOk"){ place = $("#plSel").value; updatePlaceChip(); closeSheet(); } };
+}
+function cartSheet(msg){
+  if(!cart.length){ closeSheet(); return; }
+  const note = $("#cNote") ? $("#cNote").value : "";
+  openSheet(`<h3>Siparişiniz</h3><p class="sub">Kontrol edip gönderin, birkaç dakika içinde getiriyoruz.</p>
+    <div class="lines">${cart.map((l,i)=>`<div class="line"><div><div class="t">${esc(ITEMS[l.id].name)}</div>${Object.keys(l.opts).length?`<div class="o">${esc(optText(l.opts))}</div>`:""}</div>
+      <div class="step"><button type="button" data-l="${i}" data-d="-1" aria-label="Azalt">−</button><span>${l.qty}</span><button type="button" data-l="${i}" data-d="1" aria-label="Arttır">+</button></div></div>`).join("")}</div>
+    <label class="f" for="cPlace">Nerede oturuyorsunuz?</label>
+    <select class="in" id="cPlace">${placeOptions()}</select>
+    <label class="f" for="cName">Adınız (isteğe bağlı)</label>
+    <input class="in" id="cName" autocomplete="name" placeholder="Örn. Ahmet Bey" value="${esc(guestName)}">
+    <label class="f" for="cNote">Not (isteğe bağlı)</label>
+    <textarea class="in" id="cNote" placeholder="Örn. çay limonlu olsun">${esc(note)}</textarea>
+    ${msg?`<div class="err" role="alert">${esc(msg)}</div>`:""}
+    <button class="primary" type="button" id="sendBtn">Siparişi gönder</button>
+    <button class="ghost" type="button" id="cancel">Menüye dön</button>`);
+  $("#sheet").onclick = e=>{
+    const b = e.target.closest("[data-l]");
+    if(b){ const i = +b.dataset.l, l = cart[i]; l.qty += +b.dataset.d; if(l.qty<=0) cart.splice(i,1);
+      place = $("#cPlace").value; guestName = $("#cName").value; updateCounts(); updatePlaceChip(); cartSheet(); return; }
+    if(e.target.id==="sendBtn") sendOrder();
+    if(e.target.id==="cancel") closeSheet();
+  };
+}
+
+/* ---------- Gönderim ---------- */
+async function sendOrder(){
+  place = $("#cPlace").value; guestName = $("#cName").value.trim(); store.set("mcn-ikram-ad", guestName);
+  const note = $("#cNote").value.trim();
+  if(!place){ cartSheet("Siparişi getirebilmemiz için oturduğunuz yeri seçin."); return; }
+  const btn = $("#sendBtn"); btn.disabled = true; btn.textContent = "Gönderiliyor…";
+  const title = place + (guestName ? " · " + guestName : "");
+  const lines = cart.map(l=>`${l.qty}× ${ITEMS[l.id].name}${Object.keys(l.opts).length?` (${optText(l.opts)})`:""}`);
+  if(note) lines.push("Not: " + note);
+  const message = lines.join("\n");
+  let order = null;
+  try{
+    const ctl = new AbortController(), t = setTimeout(()=>ctl.abort(), 8000);
+    const r = await fetch(SERVER + "/", {method:"POST", signal:ctl.signal, body: JSON.stringify({
+      topic:TOPIC, title, message, tags:["coffee"], priority:5, click: pageBase + "?ekran=siparis"})});
+    clearTimeout(t);
+    if(r.ok){ const j = await r.json(); order = {id:j.id, time:j.time, title, message}; }
+  }catch(e){}
+  const demo = !order && location.protocol === "file:";
+  if(!order && !demo){ cartSheet("Sipariş gönderilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin."); return; }
+  if(!order) order = {id:"yerel-"+Date.now(), time:Math.floor(Date.now()/1000), title, message};
+  addOrder(order, true); try{ bus && bus.postMessage({type:"order", order}); }catch(e){}
+  const where = place; cart = []; updateCounts(); updatePlaceChip();
+  openSheet(`<div class="done"><div class="ok">${ICON.check}</div><h3>Siparişiniz alındı</h3>
+    <p>${esc(where)} için hazırlanıyor. Birazdan getiriyoruz.</p>
+    ${demo?`<div class="note-demo">Deneme modu: dosya bilgisayardan açıldığı için sipariş yalnızca bu tarayıcıdaki sipariş ekranına düştü.</div>`:""}
+    <button class="primary" type="button" id="cancel">Tamam</button></div>`);
+  $("#sheet").onclick = e=>{ if(e.target.id==="cancel") closeSheet(); };
+}
+
+/* ---------- Menü olayları ---------- */
+$("#menu").addEventListener("click", e=>{
+  const it = e.target.closest(".item"); if(!it || it.disabled) return;
+  const x = ITEMS[it.dataset.id]; if(x.opts.length) itemSheet(x.id); else addToCart(x.id, {}, 1);
+});
+$("#cats").addEventListener("click", e=>{
+  const b = e.target.closest(".cat"); if(!b) return;
+  document.getElementById("g-"+b.dataset.go).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+const spy = new IntersectionObserver(ents=>ents.forEach(en=>{ if(en.isIntersecting){ const id = en.target.id.slice(2);
+  document.querySelectorAll(".cat").forEach(c=>{ const on = c.dataset.go===id; c.classList.toggle("on", on); if(on) c.scrollIntoView({block:"nearest",inline:"nearest"}); }); } }),
+  {rootMargin:"-40% 0px -55% 0px"});
+$("#placeChip").addEventListener("click", placeSheet);
+$("#openCart").addEventListener("click", ()=>cartSheet());
+
+/* =====================================================================
+   SİPARİŞ EKRANI
+   ===================================================================== */
+const orders = new Map();
+let status = store.get("mcn-ikram-durum", {});
+let tab = "open", live = false, sound = false, audio = null, started = false;
+
+function addOrder(o, isNew){
+  if(!o || !o.id || orders.has(o.id)) return;
+  orders.set(o.id, {...o, fresh: isNew && live});
+  if(isNew && live) ding();
+  renderOrders();
+}
+function setStatus(id, st, broadcast){
+  if(st==="new") delete status[id]; else status[id] = st;
+  store.set("mcn-ikram-durum", status); renderOrders();
+  if(!broadcast) return;
+  try{ bus && bus.postMessage({type:"status", id, st}); }catch(e){}
+  fetch(SERVER + "/", {method:"POST", body: JSON.stringify({topic:TOPIC_ST, message: JSON.stringify({id, st})})}).catch(()=>{});
+}
+function handleMsg(m, isNew){
+  if(m.event !== "message") return;
+  if(m.topic === TOPIC_ST){ try{ const d = JSON.parse(m.message); if(d.id) setStatus(d.id, d.st, false); }catch(e){} return; }
+  addOrder({id:m.id, time:m.time, title:m.title, message:m.message}, isNew);
+}
+function parse(o){
+  const lines = (o.message||"").split("\n").filter(Boolean);
+  const note = lines.filter(l=>l.startsWith("Not: ")).map(l=>l.slice(5)).join(" ");
+  const items = lines.filter(l=>!l.startsWith("Not: ")).map(l=>{ const m = l.match(/^(\d+)×\s*(.*)$/); return m?{n:m[1],t:m[2]}:{n:"",t:l}; });
+  const [where, ...who] = (o.title||"Sipariş").split(" · ");
+  return {items, note, where, who: who.join(" · ")};
+}
+function ago(ts){ const m = Math.floor((Date.now()/1000 - ts)/60);
+  if(m<1) return "şimdi"; if(m<60) return m+" dk önce"; return Math.floor(m/60)+" sa önce"; }
+function renderOrders(){
+  if($("#opsView").hidden) return;
+  const all = [...orders.values()].sort((a,b)=>b.time-a.time);
+  const open = all.filter(o=>status[o.id]!=="served").sort((a,b)=>a.time-b.time); // en eski bekleyen önce
+  const served = all.filter(o=>status[o.id]==="served");
+  $("#nOpen").textContent = open.length; $("#nServed").textContent = served.length;
+  document.title = (open.length?`(${open.length}) `:"") + "Sipariş Ekranı";
+  const list = tab==="open" ? open : served;
+  if(!list.length){
+    $("#orders").innerHTML = `<div class="empty"><strong>${tab==="open"?"Bekleyen sipariş yok":"Henüz teslim edilen yok"}</strong>
+      ${tab==="open"?"Yeni sipariş geldiğinde burada görünür ve zil çalar.":"Teslim ettiğiniz siparişler burada listelenir (son 12 saat)."}</div>`;
+    return;
+  }
+  $("#orders").innerHTML = list.map(o=>{
+    const p = parse(o), st = status[o.id] || "new", id = esc(o.id);
+    const tm = new Date(o.time*1000).toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"});
+    const lbl = {new:"Yeni", prep:"Hazırlanıyor", served:"Teslim edildi"}[st];
+    const acts = st==="new" ? `<button class="go" data-act="prep" data-id="${id}" type="button">Hazırlıyorum</button><button class="fin" data-act="served" data-id="${id}" type="button">Teslim ettim</button>`
+               : st==="prep" ? `<button data-act="new" data-id="${id}" type="button">Geri al</button><button class="fin" data-act="served" data-id="${id}" type="button">Teslim ettim</button>`
+               : `<button data-act="prep" data-id="${id}" type="button">Geri al</button>`;
+    return `<article class="card ${st} ${o.fresh?"fresh":""}">
+      <div class="top"><div><div class="where">${esc(p.where)}</div>${p.who?`<div class="who">${esc(p.who)}</div>`:""}</div>
+        <div class="time">${tm}<span class="ago" data-ts="${o.time}">${ago(o.time)}</span></div></div>
+      <span class="state ${st}">${lbl}</span>
+      <ul>${p.items.map(i=>`<li>${i.n?`<b>${esc(i.n)}×</b>`:""}${esc(i.t)}</li>`).join("")}</ul>
+      ${p.note?`<div class="memo"><strong>Not:</strong> ${esc(p.note)}</div>`:""}
+      <div class="acts">${acts}</div></article>`;
+  }).join("");
+  orders.forEach(o=>o.fresh=false);
+}
+$("#orders").addEventListener("click", e=>{ const b = e.target.closest("[data-act]"); if(b) setStatus(b.dataset.id, b.dataset.act, true); });
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click", ()=>{
+  tab = t.dataset.tab; document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x===t)); renderOrders(); }));
+setInterval(()=>document.querySelectorAll(".ago").forEach(el=>el.textContent = ago(+el.dataset.ts)), 30000);
+
+/* ---------- Ses ---------- */
+function enableSound(){
+  sound = true; $("#soundBtn").classList.add("on"); $("#soundBtn").textContent = "Ses açık"; $("#soundWarn").hidden = true;
+  try{ audio = audio || new (window.AudioContext||window.webkitAudioContext)(); audio.resume(); ding(); }catch(e){}
+  try{ navigator.wakeLock && navigator.wakeLock.request("screen").catch(()=>{}); }catch(e){}
+}
+function toggleSound(){ if(sound){ sound=false; $("#soundBtn").classList.remove("on"); $("#soundBtn").textContent="Sesi aç"; } else enableSound(); }
+$("#soundBtn").addEventListener("click", toggleSound); $("#soundBtn2").addEventListener("click", enableSound);
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden && sound){ try{ navigator.wakeLock && navigator.wakeLock.request("screen").catch(()=>{}); }catch(e){} } });
+function ding(){
+  try{ navigator.vibrate && navigator.vibrate([200,100,200]); }catch(e){}
+  if(!sound || !audio) return;
+  [0,.22,.6,.82].forEach((d,i)=>{ const o = audio.createOscillator(), g = audio.createGain();
+    o.type="sine"; o.frequency.value = i%2 ? 1175 : 880; o.connect(g); g.connect(audio.destination);
+    const t = audio.currentTime + d; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.4,t+.02); g.gain.exponentialRampToValueAtTime(0.0001,t+.35);
+    o.start(t); o.stop(t+.4); });
+}
+
+/* ---------- Bağlantı ---------- */
+function setConn(kind, txt){ $("#dot").className = "dot " + kind; $("#connTxt").textContent = txt; }
+async function startOps(){
+  if(started) return; started = true;
+  const base = `${SERVER}/${encodeURIComponent(TOPIC)},${encodeURIComponent(TOPIC_ST)}`;
+  try{
+    const r = await fetch(base + "/json?poll=1&since=12h");
+    (await r.text()).split("\n").filter(Boolean).forEach(l=>{ try{ handleMsg(JSON.parse(l), false); }catch(e){} });
+    const es = new EventSource(base + "/sse");
+    es.onopen = ()=> setConn("live","Canlı");
+    es.onerror = ()=> setConn("wait","Yeniden bağlanıyor…");
+    es.onmessage = ev=>{ try{ handleMsg(JSON.parse(ev.data), true); }catch(e){} };
+  }catch(e){ setConn("", location.protocol==="file:" ? "Deneme modu" : "Bağlantı yok"); }
+  live = true; renderOrders();
+}
+if(bus) bus.onmessage = ev=>{ const d = ev.data||{}; if(d.type==="order") addOrder(d.order, true); if(d.type==="status") setStatus(d.id, d.st, false); };
+
+/* ---------- Yönlendirme ---------- */
+function route(){
+  const ops = params.get("ekran")==="siparis" || location.hash==="#siparis";
+  $("#menuView").hidden = ops; $("#opsView").hidden = !ops; closeSheet();
+  $("#opsFirma").textContent = C.firma || "";
+  if(ops){ startOps(); renderOrders(); document.querySelector('meta[name="theme-color"]').content = "#1F4B52"; }
+  else document.title = (C.baslik||"İkram Menüsü") + (C.firma?" · "+C.firma:"");
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+renderMenu();
+document.querySelectorAll("section.group").forEach(s=>spy.observe(s));
+route();
+})();
+</script>
+</body>
+</html>

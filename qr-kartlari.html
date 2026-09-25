@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MCN QR Masa Kartları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Bu sayfa baskı için tek temalıdır (açık). */
+:root{--bg:#E6EBEC;--paper:#FFFFFF;--ink:#13212A;--muted:#5A6B74;--line:#D5DDE0;--brand:#1F4B52;--brand-ink:#F2F7F7;--accent:#B4531A;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px}
+.tool{max-width:900px;margin:0 auto;padding:24px 16px 8px;display:grid;gap:14px}
+.tool h1{font-family:var(--display);text-transform:uppercase;font-size:32px;margin:0;line-height:1}
+.tool p{margin:0;color:var(--muted);max-width:70ch}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field input{font:inherit;font-size:16px;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);width:100%}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}
+.btn.sec{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.msg{background:#F6EBCF;border-radius:10px;padding:10px 12px}
+.sheet{max-width:900px;margin:0 auto;padding:8px 16px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+
+/* ---- Kart (A6: 105 × 148 mm) ---- */
+.card{background:var(--paper);aspect-ratio:105/148;max-width:100%;border-radius:6px;box-shadow:0 6px 20px rgba(19,33,42,.12);
+  display:flex;flex-direction:column;overflow:hidden;position:relative}
+.card .band{background:var(--brand);color:var(--brand-ink);padding:6.5% 8% 5%;position:relative}
+.card .band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:repeating-linear-gradient(90deg,var(--accent) 0 22px,transparent 22px 28px)}
+.card .firm{font-family:var(--display);font-weight:600;letter-spacing:.2em;font-size:11px;text-transform:uppercase;opacity:.85}
+.card .ttl{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:.95;margin-top:4px}
+.card .logo{max-height:26px;max-width:60%;display:block;margin-bottom:6px}
+.card .body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:6% 10% 4%;text-align:center}
+.card .qr{width:62%;aspect-ratio:1;display:grid;place-items:center}
+.card .qr svg{width:100%;height:100%;display:block}
+.card .how{font-weight:600;font-size:14px;line-height:1.3}
+.card .items{font-size:11.5px;color:var(--muted);line-height:1.35}
+.card .place{border-top:1.5px solid var(--line);padding:4.5% 8% 5.5%;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .place span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.card .place b{font-family:var(--display);font-size:22px;text-transform:uppercase;line-height:1;text-align:right}
+.card.staff .band{background:var(--ink)}
+.card a.test{position:absolute;top:8px;right:10px;font-size:11px;color:var(--brand-ink);opacity:.8}
+
+@page{size:A4;margin:8mm}
+@media print{
+  body{background:#fff}
+  .tool,.card a.test{display:none!important}
+  .sheet{max-width:none;padding:0;display:grid;grid-template-columns:105mm 105mm;grid-auto-rows:148mm;gap:0;justify-content:center}
+  .card{width:105mm;height:148mm;aspect-ratio:auto;border-radius:0;box-shadow:none;outline:0.2mm dashed #9aa;break-inside:avoid;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card .ttl{font-size:30pt}.card .how{font-size:11.5pt}.card .items{font-size:8.5pt}.card .place b{font-size:17pt}
+}
+</style>
+</head>
+<body>
+<div class="tool">
+  <h1>QR Masa Kartları</h1>
+  <p>Her oda için bir kart üretilir. Kartı okutan misafirin menüsünde o oda kendiliğinden seçili gelir. Oda listesi <b>ayarlar.js</b> dosyasındaki “yerler” bölümünden gelir. A4 kağıda 4 kart sığar; kesik çizgilerden kesip masa standına koyabilirsiniz.</p>
+  <div class="field">
+    <label for="base">Menünün internet adresi</label>
+    <input id="base" placeholder="https://kullaniciadi.github.io/mcn-ikram/" inputmode="url" autocomplete="off">
+  </div>
+  <div class="actions">
+    <button class="btn" id="make" type="button">Kartları oluştur</button>
+    <button class="btn sec" id="print" type="button">Yazdır / PDF kaydet</button>
+  </div>
+  <div class="msg" id="msg" hidden></div>
+</div>
+<div class="sheet" id="sheet"></div>
+
+<script src="ayarlar.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+const C = window.IKRAM || {};
+const $ = s=>document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const msg = t=>{ $("#msg").hidden = !t; $("#msg").textContent = t||""; };
+
+function guessBase(){
+  try{ const s = localStorage.getItem("mcn-qr-base"); if(s) return s; }catch(e){}
+  if(location.protocol.startsWith("http")) return location.href.replace(/[^/]*([?#].*)?$/,"");
+  return "";
+}
+function qrSvg(text){
+  const q = qrcode(0, "M"); q.addData(text); q.make();
+  const n = q.getModuleCount(), m = 2; let d = "";
+  for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += `M${c+m} ${r+m}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${n+2*m} ${n+2*m}" shape-rendering="crispEdges" role="img" aria-label="QR kod"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#13212A"/></svg>`;
+}
+function card(title, url, place, how, staff){
+  const logo = C.logo ? `<img class="logo" src="${esc(C.logo)}" alt="">` : "";
+  const items = (C.menu||[]).map(b=>b.bolum).join(" · ");
+  return `<article class="card${staff?" staff":""}">
+    <div class="band">${logo}<div class="firm">${esc(C.firma||"")}</div><div class="ttl">${esc(title)}</div><a class="test" href="${esc(url)}" target="_blank" rel="noopener">aç ↗</a></div>
+    <div class="body"><div class="qr">${qrSvg(url)}</div><div class="how">${how}</div>${staff?"":`<div class="items">${esc(items)}</div>`}</div>
+    <div class="place"><span>${staff?"Yalnızca personel":"Bulunduğunuz yer"}</span><b>${esc(place)}</b></div></article>`;
+}
+function make(){
+  let base = $("#base").value.trim();
+  if(!/^https?:\/\//i.test(base)){ msg("Önce menünün https:// ile başlayan internet adresini yazın."); $("#sheet").innerHTML=""; return; }
+  if(typeof qrcode !== "function"){ msg("QR kod aracı yüklenemedi. Bu sayfa için internet bağlantısı gerekli; bağlantıyı kontrol edip sayfayı yenileyin."); return; }
+  base = base.replace(/index\.html?$/i,""); if(!base.endsWith("/")) base += "/";
+  try{ localStorage.setItem("mcn-qr-base", base); }catch(e){}
+  msg("");
+  const cards = (C.yerler||[]).map(p=> card(C.baslik||"İkram Menüsü", base + "?yer=" + encodeURIComponent(p), p,
+      "Telefonunuzun kamerasıyla okutun,<br>siparişiniz yerinize gelsin."));
+  cards.push(card("Sipariş Ekranı", base + "?ekran=siparis", "Çay ocağı", "Personel telefonunda açın,<br>gelen siparişler burada görünür.", true));
+  $("#sheet").innerHTML = cards.join("");
+}
+$("#make").addEventListener("click", make);
+$("#print").addEventListener("click", ()=>{ if(!$("#sheet").children.length) make(); window.print(); });
+$("#base").addEventListener("keydown", e=>{ if(e.key==="Enter") make(); });
+$("#base").value = guessBase();
+if($("#base").value) window.addEventListener("load", make);
+})();
+</script>
+</body>
+</html>
