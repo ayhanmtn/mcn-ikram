@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-:root{--bg:#ECF0F1;--paper:#fff;--ink:#13212A;--muted:#5A6B74;--line:#D5DDE0;--brand:#1F4B52;--accent:#B4531A;--soft:#F5E3D5;--warn:#F6EBCF;
+:root{--bg:#ECF0F1;--paper:#fff;--ink:#13212A;--muted:#5A6B74;--line:#D5DDE0;--brand:#002C73;--accent:#0270C0;--soft:#E1EFFA;--warn:#F6EBCF;
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",Consolas,monospace;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#173840;--accent:#E3873F;--soft:#3A2617;--warn:#352A12;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#173840;--accent:#E3873F;--soft:#3A2617;--warn:#352A12;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#0B2552;--accent:#4AA8F0;--soft:#0F2C47;--warn:#352A12;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D151A;--paper:#152128;--ink:#E5ECEE;--muted:#93A5AD;--line:#283840;--brand:#0B2552;--accent:#4AA8F0;--soft:#0F2C47;--warn:#352A12;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
 header{background:var(--brand);color:#F2F7F7;padding:32px 16px 26px}
@@ -70,15 +70,17 @@ th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted
 </section>
 
 <section>
-  <h2><span class="n">2</span> Çaycının telefonunu hazırlayın</h2>
+  <h2><span class="n">2</span> Çaycının iPhone'unu hazırlayın</h2>
   <p class="time">5 dakika · ntfy uygulaması (ücretsiz)</p>
   <ol>
-    <li>Play Store veya App Store'dan <b>ntfy</b> uygulamasını kurun.</li>
-    <li>Uygulamada <b>+</b> düğmesine basın, konu adı olarak şunu yazın: <code>mcn-ikram-r7x4k9pq2w</code> → <b>Abone ol</b>.</li>
-    <li>Android'de: konunun ayarlarından <b>Anında teslim</b> (instant delivery) açık olsun; telefonun ayarlarından ntfy için <b>pil optimizasyonunu kapatın</b>. Böylece ekran kapalıyken de zil çalar.</li>
-    <li>Bildirime dokununca sipariş ekranı açılır. Ekranda <b>Sesi aç</b>'a bir kez basın ve sayfayı ana ekrana ekleyin (tarayıcı menüsü → “Ana ekrana ekle”).</li>
+    <li>App Store'da <b>ntfy</b> aratın ve kurun. İlk açılışta bildirim izni sorulunca <b>İzin Ver</b> deyin.</li>
+    <li>Sağ üstteki <b>+</b> düğmesine basın, konu adına şunu yazın: <code>mcn-ikram-r7x4k9pq2w</code> → <b>Subscribe</b>. Sunucu alanını değiştirmeyin.</li>
+    <li><b>Ayarlar → Bildirimler → ntfy</b>: “Bildirimlere İzin Ver”, “Sesler”, “Kilitli Ekran” ve <b>“Zamana Duyarlı Bildirimler”</b> açık olsun. Siparişler zamana duyarlı gönderildiği için Odak modunda da görünür.</li>
+    <li>Telefonun yan tarafındaki <b>sessiz anahtarı kapalı</b> olsun (turuncu görünmesin), zil sesi duyulabilir seviyede olsun.</li>
+    <li>Bildirime dokununca sipariş ekranı Safari'de açılır. Orada <b>Paylaş → Ana Ekrana Ekle</b> ile kısayol oluşturun; “Hazırlıyorum / Teslim ettim” takibi buradan yapılır.</li>
   </ol>
-  <p class="tip">Birden fazla kişi (çaycı, sekreter) aynı konuya abone olabilir. Biri “Teslim ettim” dediğinde diğer ekranlarda da güncellenir.</p>
+  <p class="tip">iPhone, arka plandaki web sayfalarını durdurur. Bu yüzden asıl zil ve uyarıyı <b>ntfy uygulaması</b> verir; sipariş ekranı takip içindir. Telefon kapalı ya da internetsiz olsa bile siparişler 12 saat bekler, açılınca gelir.</p>
+  <p class="tip">Birden fazla kişi (çaycı, sekreter) aynı konuya abone olabilir. Biri “Teslim ettim” dediğinde diğer ekranlarda da güncellenir. Android telefonlarda ntfy ayarından “Anında teslim” açılmalı ve pil optimizasyonu kapatılmalıdır.</p>
 </section>
 
 <section>

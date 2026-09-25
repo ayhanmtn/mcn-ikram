@@ -17,8 +17,8 @@ window.IKRAM = {
   karsilama:  "Hoş geldiniz. Ne içmek istersiniz? Seçin, hemen getirelim.",
   altYazi:    "Tüm ikramlarımız ücretsizdir. Afiyet olsun.",
 
-  // Logonuz varsa bu klasöre "logo.png" adıyla koyup aşağıya yazın. Yoksa boş bırakın: ""
-  logo: "",
+  // Logo dosyasının adı (GitHub'daki adıyla birebir aynı). Logo istemezseniz boş bırakın: ""
+  logo: "logo.jpeg",
 
   // Siparişlerin gideceği bildirim kanalı. Çaycının telefonundaki ntfy uygulamasında da
   // AYNI isim yazılı olmalı. Kimseyle paylaşmayın.

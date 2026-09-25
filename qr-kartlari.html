@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
 <style>
 /* Bu sayfa baskı için tek temalıdır (açık). */
-:root{--bg:#E6EBEC;--paper:#FFFFFF;--ink:#13212A;--muted:#5A6B74;--line:#D5DDE0;--brand:#1F4B52;--brand-ink:#F2F7F7;--accent:#B4531A;
+:root{--bg:#E8EDF4;--paper:#FFFFFF;--ink:#0E1B2E;--muted:#56657A;--line:#D3DCE8;--brand:#002C73;--brand-ink:#F3F7FD;--accent:#0270C0;--wave:#037FD7;
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px}
@@ -27,15 +27,15 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .sheet{max-width:900px;margin:0 auto;padding:8px 16px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
 
 /* ---- Kart (A6: 105 × 148 mm) ---- */
-.card{background:var(--paper);aspect-ratio:105/148;max-width:100%;border-radius:6px;box-shadow:0 6px 20px rgba(19,33,42,.12);
+.card{background:var(--paper);min-height:0;max-width:100%;border-radius:6px;box-shadow:0 6px 20px rgba(19,33,42,.12);
   display:flex;flex-direction:column;overflow:hidden;position:relative}
 .card .band{background:var(--brand);color:var(--brand-ink);padding:6.5% 8% 5%;position:relative}
-.card .band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:repeating-linear-gradient(90deg,var(--accent) 0 22px,transparent 22px 28px)}
+.card .band{padding-bottom:9%!important}.card .band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:14px;background:var(--wave);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 18' preserveAspectRatio='none'%3E%3Cpath d='M0 18V12C120 -2 260 -2 400 10V18Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 18' preserveAspectRatio='none'%3E%3Cpath d='M0 18V12C120 -2 260 -2 400 10V18Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
 .card .firm{font-family:var(--display);font-weight:600;letter-spacing:.2em;font-size:11px;text-transform:uppercase;opacity:.85}
 .card .ttl{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:34px;line-height:.95;margin-top:4px}
-.card .logo{max-height:26px;max-width:60%;display:block;margin-bottom:6px}
+.card .logo{height:34px;width:auto;max-width:60%;display:block;margin-bottom:8px;background:#fff;padding:4px 7px;border-radius:7px}
 .card .body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:6% 10% 4%;text-align:center}
-.card .qr{width:62%;aspect-ratio:1;display:grid;place-items:center}
+.card .qr{width:min(62%,220px);aspect-ratio:1;display:grid;place-items:center}
 .card .qr svg{width:100%;height:100%;display:block}
 .card .how{font-weight:600;font-size:14px;line-height:1.3}
 .card .items{font-size:11.5px;color:var(--muted);line-height:1.35}
@@ -45,12 +45,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .card.staff .band{background:var(--ink)}
 .card a.test{position:absolute;top:8px;right:10px;font-size:11px;color:var(--brand-ink);opacity:.8}
 
-@page{size:A4;margin:8mm}
+@page{size:A4;margin:0}
 @media print{
   body{background:#fff}
   .tool,.card a.test{display:none!important}
-  .sheet{max-width:none;padding:0;display:grid;grid-template-columns:105mm 105mm;grid-auto-rows:148mm;gap:0;justify-content:center}
-  .card{width:105mm;height:148mm;aspect-ratio:auto;border-radius:0;box-shadow:none;outline:0.2mm dashed #9aa;break-inside:avoid;
+  .sheet{max-width:none;padding:0;display:grid;grid-template-columns:105mm 105mm;grid-auto-rows:148mm;gap:0;justify-content:center;align-content:start}
+  .card .qr{width:64%}
+  .card{width:105mm;height:148mm;border-radius:0;box-shadow:none;outline:0.2mm dashed #9aa;break-inside:avoid;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .card .ttl{font-size:30pt}.card .how{font-size:11.5pt}.card .items{font-size:8.5pt}.card .place b{font-size:17pt}
 }
@@ -90,7 +91,7 @@ function qrSvg(text){
   const q = qrcode(0, "M"); q.addData(text); q.make();
   const n = q.getModuleCount(), m = 2; let d = "";
   for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += `M${c+m} ${r+m}h1v1h-1z`;
-  return `<svg viewBox="0 0 ${n+2*m} ${n+2*m}" shape-rendering="crispEdges" role="img" aria-label="QR kod"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#13212A"/></svg>`;
+  return `<svg viewBox="0 0 ${n+2*m} ${n+2*m}" shape-rendering="crispEdges" role="img" aria-label="QR kod"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#0E1B2E"/></svg>`;
 }
 function card(title, url, place, how, staff){
   const logo = C.logo ? `<img class="logo" src="${esc(C.logo)}" alt="">` : "";

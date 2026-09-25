@@ -3,28 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1F4B52">
+<meta name="theme-color" content="#002C73">
 <meta name="robots" content="noindex">
 <title>MCN İkram Menüsü</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231F4B52'/%3E%3Cpath d='M11 6h10c0 4-2.6 6.2-2.6 9.6S21 21 21 24c0 1.8-2.2 3-5 3s-5-1.2-5-3c0-3 2.6-5 2.6-8.4S11 10 11 6z' fill='none' stroke='%23F2C49B' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23002C73'/%3E%3Cpath d='M11 6h10c0 4-2.6 6.2-2.6 9.6S21 21 21 24c0 1.8-2.2 3-5 3s-5-1.2-5-3c0-3 2.6-5 2.6-8.4S11 10 11 6z' fill='none' stroke='%236BC1F5' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --bg:#ECF0F1; --surface:#FFFFFF; --surface-2:#F4F7F8; --ink:#13212A; --muted:#5A6B74; --line:#D5DDE0;
-  --accent:#B4531A; --accent-ink:#FFFFFF; --accent-soft:#F5E3D5; --brand:#1F4B52; --brand-ink:#F2F7F7; --icon:#1F4B52;
-  --ok:#2C7A4B; --ok-soft:#DDEFE3; --warn:#9A6A10; --warn-soft:#F6EBCF; --bad:#B3261E; --shadow:0 10px 30px rgba(19,33,42,.16);
+  --bg:#EEF2F7; --surface:#FFFFFF; --surface-2:#F4F7FB; --ink:#0E1B2E; --muted:#56657A; --line:#D3DCE8;
+  --accent:#0270C0; --accent-ink:#FFFFFF; --accent-soft:#E1EFFA; --brand:#002C73; --brand-ink:#F3F7FD; --icon:#002C73; --wave:#037FD7;
+  --ok:#2C7A4B; --ok-soft:#DDEFE3; --warn:#9A6A10; --warn-soft:#F6EBCF; --bad:#B3261E; --shadow:0 10px 30px rgba(0,44,115,.18);
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
-  --bg:#0D151A; --surface:#152128; --surface-2:#1B2A32; --ink:#E5ECEE; --muted:#93A5AD; --line:#283840;
-  --accent:#E3873F; --accent-ink:#1B0F06; --accent-soft:#3A2617; --brand:#173840; --brand-ink:#E5F0F0; --icon:#E3873F;
+  --bg:#0A1220; --surface:#111C2E; --surface-2:#17243A; --ink:#E6ECF5; --muted:#93A2B8; --line:#243349;
+  --accent:#4AA8F0; --accent-ink:#04121F; --accent-soft:#0F2C47; --brand:#0B2552; --brand-ink:#E6EEF9; --icon:#4AA8F0; --wave:#4AA8F0;
   --ok:#6CC08C; --ok-soft:#173226; --warn:#E0B458; --warn-soft:#352A12; --bad:#F2867E; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark;}}
 :root[data-theme="dark"]{
-  --bg:#0D151A; --surface:#152128; --surface-2:#1B2A32; --ink:#E5ECEE; --muted:#93A5AD; --line:#283840;
-  --accent:#E3873F; --accent-ink:#1B0F06; --accent-soft:#3A2617; --brand:#173840; --brand-ink:#E5F0F0; --icon:#E3873F;
+  --bg:#0A1220; --surface:#111C2E; --surface-2:#17243A; --ink:#E6ECF5; --muted:#93A2B8; --line:#243349;
+  --accent:#4AA8F0; --accent-ink:#04121F; --accent-soft:#0F2C47; --brand:#0B2552; --brand-ink:#E6EEF9; --icon:#4AA8F0; --wave:#4AA8F0;
   --ok:#6CC08C; --ok-soft:#173226; --warn:#E0B458; --warn-soft:#352A12; --bad:#F2867E; --shadow:0 10px 30px rgba(0,0,0,.45); color-scheme:dark;}
 
 *{box-sizing:border-box}
@@ -37,11 +37,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .wrap{max-width:560px;margin:0 auto;padding-inline:16px}
 
 /* ---------- Başlık ---------- */
-.hero{background:var(--brand);color:var(--brand-ink);padding-block:26px 22px;position:relative;overflow:hidden}
+.hero{background:var(--brand);color:var(--brand-ink);padding-block:22px 34px;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;border:28px solid rgba(255,255,255,.05)}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:repeating-linear-gradient(90deg,var(--accent) 0 28px,transparent 28px 36px);opacity:.9}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18px;background:var(--wave);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 18' preserveAspectRatio='none'%3E%3Cpath d='M0 18V12C120 -2 260 -2 400 10V18Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 18' preserveAspectRatio='none'%3E%3Cpath d='M0 18V12C120 -2 260 -2 400 10V18Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;opacity:.95}
 .hero .wrap{position:relative}
-.logo{max-height:40px;max-width:180px;display:block;margin-bottom:12px}
+.logo{height:52px;width:auto;max-width:70%;display:block;margin-bottom:14px;background:#fff;padding:6px 10px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .eyebrow{font-family:var(--display);font-weight:600;letter-spacing:.18em;font-size:13px;text-transform:uppercase;opacity:.8}
 .hero h1{font-family:var(--display);font-weight:700;font-size:46px;line-height:.98;margin:6px 0 8px;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
 .hero p{margin:0;opacity:.85;max-width:34ch}
@@ -146,7 +146,7 @@ textarea.in{resize:vertical;min-height:64px}
 .card.prep{border-top-color:var(--warn)}
 .card.served{border-top-color:var(--ok);opacity:.8}
 .card.fresh{animation:pulse 1.2s ease-out 3}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,135,63,.55)}100%{box-shadow:0 0 0 16px rgba(227,135,63,0)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(3,127,215,.5)}100%{box-shadow:0 0 0 16px rgba(3,127,215,0)}}
 @media (prefers-reduced-motion:reduce){.card.fresh{animation:none}}
 .card .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .card .where{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.05;text-transform:uppercase}
@@ -519,7 +519,7 @@ function route(){
   const ops = params.get("ekran")==="siparis" || location.hash==="#siparis";
   $("#menuView").hidden = ops; $("#opsView").hidden = !ops; closeSheet();
   $("#opsFirma").textContent = C.firma || "";
-  if(ops){ startOps(); renderOrders(); document.querySelector('meta[name="theme-color"]').content = "#1F4B52"; }
+  if(ops){ startOps(); renderOrders(); document.querySelector('meta[name="theme-color"]').content = "#002C73"; }
   else document.title = (C.baslik||"İkram Menüsü") + (C.firma?" · "+C.firma:"");
   window.scrollTo(0,0);
 }
