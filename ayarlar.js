@@ -42,7 +42,7 @@ window.IKRAM = {
         secenekler: { "Dem": ["Tavşan kanı", "Açık", "Koyu"], "Şeker": ["Şekersiz", "1 şeker", "2 şeker"] } },
       { ad: "Türk Kahvesi", aciklama: "Yanında bir bardak su ile",           ikon: "fincan",
         secenekler: { "Şeker": ["Sade", "Az şekerli", "Orta", "Şekerli"] } },
-      { ad: "Neskafe",      aciklama: "Kupada, sıcak",                       ikon: "kahve",
+      { ad: "Nescafé",      aciklama: "Kupada, sıcak",                       ikon: "kahve",
         secenekler: { "Süt": ["Sütlü", "Sütsüz"], "Şeker": ["Şekersiz", "1 şeker", "2 şeker"] } },
       { ad: "Espresso",     aciklama: "Yoğun ve kısa",                       ikon: "fincan",
         secenekler: { "Boy": ["Tek", "Duble"], "Şeker": ["Şekersiz", "1 şeker"] } }
