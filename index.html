@@ -169,6 +169,7 @@ textarea.in{resize:vertical;min-height:64px}
 .empty strong{display:block;font-family:var(--display);font-size:24px;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
 .fatal{max-width:480px;margin:60px auto;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 </style>
+<link rel="stylesheet" href="yemek-ek.css">
 </head>
 <body>
 
@@ -187,6 +188,9 @@ textarea.in{resize:vertical;min-height:64px}
     </div>
   </header>
   <nav class="cats" aria-label="Kategoriler"><div class="wrap" id="cats"></div></nav>
+  <div class="wrap"><div class="foodnav"><button id="showDrink" class="on">☕ İkram</button><button id="showFood">🍽️ Yemek Menüsü</button><button id="showVote">⭐ Yemek Öner / Oyla</button></div></div>
+  <div class="wrap" id="foodView" hidden></div>
+  <div class="wrap" id="voteView" hidden></div>
   <main class="wrap" id="menu"></main>
   <div class="bar" id="bar" hidden>
     <button type="button" id="openCart"><span>Siparişi gözden geçir</span><span class="cnt" id="barCount">0</span></button>
@@ -198,13 +202,14 @@ textarea.in{resize:vertical;min-height:64px}
   <div class="opsbar">
     <div class="wrap">
       <div><div class="e" id="opsFirma"></div><h1>Sipariş Ekranı</h1></div>
-      <div class="tools">
+      <div class="tools"><button class="pill-btn" id="kitchenBtn" type="button">Mutfak / Menü</button>
         <span class="conn"><span class="dot wait" id="dot"></span><span id="connTxt">Bağlanıyor</span></span>
         <button class="pill-btn" id="soundBtn" type="button">Sesi aç</button>
       </div>
     </div>
   </div>
   <div class="wrap" style="max-width:960px">
+    <div id="kitchenPanel" hidden></div>
     <div class="soundwarn" id="soundWarn"><span>Yeni siparişte zil çalması için sesi bir kez açın.</span><button type="button" id="soundBtn2">Sesi aç</button></div>
     <div class="tabs">
       <button class="tab on" data-tab="open" type="button">Bekleyen <b id="nOpen">0</b></button>
@@ -217,6 +222,7 @@ textarea.in{resize:vertical;min-height:64px}
 <div class="scrim" id="scrim" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 
 <script src="ayarlar.js"></script>
+<script src="yemek-verisi.js"></script>
 <script>
 (function(){
 const C = window.IKRAM;
@@ -513,6 +519,60 @@ async function startOps(){
   live = true; renderOrders();
 }
 if(bus) bus.onmessage = ev=>{ const d = ev.data||{}; if(d.type==="order") addOrder(d.order, true); if(d.type==="status") setStatus(d.id, d.st, false); };
+
+
+
+/* ================= YEMEK MODÜLÜ ================= */
+const Y = window.YEMEK || {haftalik:[],yemekHavuzu:[],stok:[]};
+const foodStore = {
+  week(){ return store.get("mcn-yemek-hafta", Y.haftalik); },
+  setWeek(v){ store.set("mcn-yemek-hafta",v); },
+  stock(){ return store.get("mcn-yemek-stok",Y.stok); },
+  setStock(v){ store.set("mcn-yemek-stok",v); },
+  votes(){ return store.get("mcn-yemek-oy",{}); },
+  setVotes(v){ store.set("mcn-yemek-oy",v); }
+};
+const DAYS=['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+function todayName(){ return DAYS[new Date().getDay()]; }
+function mealText(m){ return [m.ana,m.yan,m.corba,m.ekstra,m.diger].filter(Boolean).join(' · '); }
+function showMode(mode){
+  $('#menu').hidden=mode!=='drink'; $('.cats').hidden=mode!=='drink'; $('#bar').hidden=mode!=='drink'||!cart.length;
+  $('#foodView').hidden=mode!=='food'; $('#voteView').hidden=mode!=='vote';
+  $('#showDrink').classList.toggle('on',mode==='drink'); $('#showFood').classList.toggle('on',mode==='food'); $('#showVote').classList.toggle('on',mode==='vote');
+  if(mode==='food') renderFood(); if(mode==='vote') renderVotes();
+}
+$('#showDrink').onclick=()=>showMode('drink'); $('#showFood').onclick=()=>showMode('food'); $('#showVote').onclick=()=>showMode('vote');
+function renderFood(){
+ const week=foodStore.week(), td=todayName(), today=week.find(x=>x.gun===td);
+ $('#foodView').innerHTML=`<div class="foodbox today"><h2>Bugünün Yemeği</h2>${today?`<h3>${esc(today.ana)}</h3><div>${esc([today.yan,today.corba,today.ekstra,today.diger].filter(Boolean).join(' · '))}</div>`:'<div class="muted">Bugün için yemek tanımlı değil.</div>'}</div>
+ <div class="foodbox"><h2>Haftalık Menü</h2><div class="mealgrid">${week.map(m=>`<div class="mealrow"><b>${esc(m.gun)}</b><span>${esc(mealText(m))}</span></div>`).join('')}</div></div>
+ <div class="foodbox guestmeal"><h2>Misafir Yemeği Bildir</h2><label>Kişi sayısı <input class="in" id="gmCount" type="number" min="1" value="1"></label>
+ <label><input type="checkbox" value="Yoğurt"> Yoğurt</label><label><input type="checkbox" value="Salata"> Salata</label><label><input type="checkbox" value="Çorba"> Çorba</label>
+ <label class="f">Özel istek / çıkarılacak ürün</label><textarea class="in" id="gmNote" placeholder="Örn. 1 kişi çorba istemiyor, 2 ekstra yoğurt"></textarea><button class="primary" id="gmSend">Mutfağa bildir</button></div>`;
+ $('#gmSend').onclick=sendGuestMeal;
+}
+async function sendGuestMeal(){
+ const n=Math.max(1,+$('#gmCount').value||1), extras=[...document.querySelectorAll('.guestmeal input[type=checkbox]:checked')].map(x=>x.value), note=$('#gmNote').value.trim();
+ const msg=`${n} kişi misafir yemeği${extras.length?' | Ekstra: '+extras.join(', '):''}${note?' | Not: '+note:''}`;
+ try{ await fetch(SERVER+'/',{method:'POST',body:JSON.stringify({topic:TOPIC,title:'🍽️ Misafir Yemeği',message:msg,tags:['plate_with_cutlery'],priority:5,click:pageBase+'?ekran=siparis'})}); alert('Misafir yemeği mutfağa bildirildi.'); }catch(e){ alert('Bildirim gönderilemedi.'); }
+}
+function renderVotes(){
+ const votes=foodStore.votes();
+ $('#voteView').innerHTML=`<div class="foodbox"><h2>Yemek Öneri & Oylama</h2><p class="muted">Beğendiğiniz yemeklere 1–5 yıldız verin. Yüksek puanlı yemekler mutfak ekranında öne çıkar.</p>${Y.yemekHavuzu.map(x=>`<div class="mealrow"><b>${esc(x)}</b><span class="stars" data-food="${esc(x)}">${[1,2,3,4,5].map(n=>`<button data-n="${n}" title="${n} yıldız">${(votes[x]||0)>=n?'★':'☆'}</button>`).join('')}</span></div>`).join('')}</div>`;
+ $('#voteView').onclick=e=>{const b=e.target.closest('[data-n]');if(!b)return;const food=b.parentElement.dataset.food;const v=foodStore.votes();v[food]=+b.dataset.n;foodStore.setVotes(v);renderVotes();};
+}
+function renderKitchen(){
+ const week=foodStore.week(), stock=foodStore.stock(), votes=foodStore.votes();
+ const ranked=Object.entries(votes).sort((a,b)=>b[1]-a[1]).slice(0,6);
+ $('#kitchenPanel').innerHTML=`<div class="foodbox"><h2>🍽️ Mutfak Yönetimi</h2><p class="muted">Menüyü bir gün önceden düzenleyin, stoğu güncelleyin ve alışveriş listesini çıkarın.</p></div>
+ <div class="admin-grid"><div class="foodbox"><h3>Haftalık Menü</h3>${week.map((m,i)=>`<div class="mealrow"><b>${esc(m.gun)}</b><div><input class="in" data-mi="${i}" value="${esc(m.ana)}"><small class="muted"> ${esc([m.yan,m.corba,m.ekstra,m.diger].filter(Boolean).join(' · '))}</small></div></div>`).join('')}<button class="primary" id="saveWeek">Menüyü kaydet</button></div>
+ <div class="foodbox"><h3>⭐ Yüksek Puanlı Yemekler</h3>${ranked.length?ranked.map(([n,v])=>`<div class="stockline"><span>${esc(n)}</span><b>${'★'.repeat(v)}</b></div>`).join(''):'<p class="muted">Henüz oy yok.</p>'}</div></div>
+ <div class="foodbox"><h3>Mutfak Stoğu</h3><div class="admin-grid">${stock.map((s,i)=>`<div class="foodbox stock ${s.miktar<s.min?'low':'ok'}"><div class="stockline"><b>${esc(s.ad)}</b><span>Min: ${s.min} ${esc(s.birim)}</span></div><div class="stockline"><input class="in qty" type="number" data-si="${i}" value="${s.miktar}"><span>${esc(s.birim)}</span></div></div>`).join('')}</div><button class="primary" id="saveStock">Stoğu kaydet</button><button class="mini-btn" id="shop10">10 günlük alışveriş listesi</button><div id="shopOut"></div></div>`;
+ $('#saveWeek').onclick=()=>{document.querySelectorAll('[data-mi]').forEach(x=>week[+x.dataset.mi].ana=x.value.trim());foodStore.setWeek(week);alert('Menü bu cihazda kaydedildi.');};
+ $('#saveStock').onclick=()=>{document.querySelectorAll('[data-si]').forEach(x=>stock[+x.dataset.si].miktar=+x.value||0);foodStore.setStock(stock);renderKitchen();};
+ $('#shop10').onclick=()=>{const cur=foodStore.stock();const low=cur.filter(x=>x.miktar<x.min*2).map(x=>`${x.ad}: yaklaşık ${Math.max(0,x.min*2-x.miktar)} ${x.birim}`);$('#shopOut').innerHTML=`<div class="shop"><b>10 günlük öneri liste</b>\n${esc(low.join('\n')||'Mevcut minimumlara göre acil eksik görünmüyor.')}</div>`;};
+}
+$('#kitchenBtn').onclick=()=>{const p=$('#kitchenPanel');p.hidden=!p.hidden;if(!p.hidden)renderKitchen();};
 
 /* ---------- Yönlendirme ---------- */
 function route(){

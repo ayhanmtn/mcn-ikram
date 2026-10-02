@@ -13,8 +13,8 @@
 window.IKRAM = {
 
   firma:      "MCN Grup Otomotiv",
-  baslik:     "İkram Menüsü",
-  karsilama:  "Hoş geldiniz. Ne içmek istersiniz? Seçin, hemen getirelim.",
+  baslik:     "MCN İkram & Yemek",
+  karsilama:  "Hoş geldiniz. İkram siparişi verebilir, günün ve haftanın yemek menüsünü görebilirsiniz.",
   altYazi:    "Tüm ikramlarımız ücretsizdir. Afiyet olsun.",
 
   // Logo dosyasının adı (GitHub'daki adıyla birebir aynı). Logo istemezseniz boş bırakın: ""
